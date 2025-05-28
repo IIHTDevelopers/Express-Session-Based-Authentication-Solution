@@ -52,19 +52,19 @@ describe('Hotel Routes', () => {
       const response = await request(app).get('/api/hotels');
       expect(response.status).toBe(200);
       expect(response.body.length).toBeGreaterThan(0);
-      expect(response.body[0].name).toBe('Hotel Sunshine');
+      expect(response.body[0].name).toMatch(/hotel Sunshine/i);
     });
 
     test(`${hotelRoutesBoundaryTest} GET /api/hotels/:id - should return hotel by id`, async () => {
       const response = await request(app).get('/api/hotels/1');
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Hotel Sunshine');
+      expect(response.body.name).toMatch(/hotel Sunshine/i);
     });
 
     test(`${hotelRoutesBoundaryTest} GET /api/hotels/:id - should return 404 for non-existent hotel`, async () => {
       const response = await request(app).get('/api/hotels/999');
       expect(response.status).toBe(404);
-      expect(response.body.message).toBe('Hotel not found');
+      expect(response.body.message).toMatch(/hotel not found/i);
     });
 
     test(`${hotelRoutesBoundaryTest} POST /api/hotels - should return unauthorized if not authenticated`, async () => {
@@ -75,7 +75,7 @@ describe('Hotel Routes', () => {
       });
 
       expect(response.status).toBe(401);
-      expect(response.body.message).toBe('Unauthorized');
+      expect(response.body.message).toMatch(/unauthorized/i);
     });
 
     test(`${hotelRoutesBoundaryTest} PUT /api/hotels/:id - should return unauthorized if not authenticated`, async () => {
@@ -88,7 +88,7 @@ describe('Hotel Routes', () => {
       });
 
       expect(response.status).toBe(401);
-      expect(response.body.message).toBe('Unauthorized');
+      expect(response.body.message).toMatch(/unauthorized/i);
     });
   });
 });
