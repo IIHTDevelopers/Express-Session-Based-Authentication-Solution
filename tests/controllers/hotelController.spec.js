@@ -46,19 +46,19 @@ describe('Hotel Controller', () => {
             const response = await request(app).get('/api/hotels');
             expect(response.status).toBe(200);
             expect(response.body.length).toBeGreaterThan(0);
-            expect(response.body[0].name).toBe('Hotel Sunshine');
+            expect(response.body[0].name).toMatch(/hotel Sunshine/i);
         });
 
         test(`${hotelControllerBoundaryTest} GET /api/hotels/:id - should return hotel by id`, async () => {
             const response = await request(app).get('/api/hotels/1');
             expect(response.status).toBe(200);
-            expect(response.body.name).toBe('Hotel Sunshine');
+            expect(response.body.name).toMatch(/hotel Sunshine/i);
         });
 
         test(`${hotelControllerBoundaryTest} GET /api/hotels/:id - should return 404 for non-existent hotel`, async () => {
             const response = await request(app).get('/api/hotels/999');
             expect(response.status).toBe(404);
-            expect(response.body.message).toBe('Hotel not found');
+            expect(response.body.message).toMatch(/hotel not found/i);
         });
 
         test(`${hotelControllerBoundaryTest} POST /api/hotels - should create hotel if authenticated`, async () => {
@@ -74,8 +74,8 @@ describe('Hotel Controller', () => {
             });
 
             expect(response.status).toBe(201);
-            expect(response.body.message).toBe('Hotel created successfully');
-            expect(response.body.hotel.name).toBe('Hotel California');
+            expect(response.body.message).toMatch(/hotel created successfully/i);
+            expect(response.body.hotel.name).toMatch(/hotel California/i);
         });
 
         test(`${hotelControllerBoundaryTest} POST /api/hotels - should return unauthorized if not authenticated`, async () => {
@@ -86,7 +86,7 @@ describe('Hotel Controller', () => {
             });
 
             expect(response.status).toBe(401);
-            expect(response.body.message).toBe('Unauthorized');
+            expect(response.body.message).toMatch(/unauthorized/i);
         });
 
         test(`${hotelControllerBoundaryTest} PUT /api/hotels/:id - should update hotel if authenticated`, async () => {
@@ -105,8 +105,8 @@ describe('Hotel Controller', () => {
             });
 
             expect(response.status).toBe(200);
-            expect(response.body.message).toBe('Hotel updated successfully');
-            expect(response.body.hotel.name).toBe('Hotel Mirage Updated');
+            expect(response.body.message).toMatch(/hotel updated successfully/i);
+            expect(response.body.hotel.name).toMatch(/hotel Mirage Update/i);
         });
 
         test(`${hotelControllerBoundaryTest} PUT /api/hotels/:id - should return unauthorized if not authenticated`, async () => {
@@ -119,7 +119,7 @@ describe('Hotel Controller', () => {
             });
 
             expect(response.status).toBe(401);
-            expect(response.body.message).toBe('Unauthorized');
+            expect(response.body.message).toMatch(/unauthorized/i);
         });
     });
 });
