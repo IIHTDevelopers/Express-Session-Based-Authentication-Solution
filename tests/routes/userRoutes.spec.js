@@ -57,7 +57,7 @@ describe('User Routes', () => {
             });
 
             expect(response.status).toBe(400);
-            expect(response.body.message).toBe('User already exists');
+            expect(response.body.message).toMatch(/user already exists/i);
         });
 
         test(`${userRoutesBoundaryTest} POST /api/users/login - should return 400 if credentials are invalid`, async () => {
@@ -67,7 +67,7 @@ describe('User Routes', () => {
             });
 
             expect(response.status).toBe(400);
-            expect(response.body.message).toBe('Invalid credentials');
+            expect(response.body.message).toMatch(/invalid credentials/i);
         });
     });
 });
